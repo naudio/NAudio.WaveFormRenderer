@@ -1,0 +1,8 @@
+syntax:glob
+
+bin/
+obj/
+*.suo
+*.user
+*.orig
+packages/
