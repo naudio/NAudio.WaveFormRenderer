@@ -1,6 +1,6 @@
 using System.Drawing;
 
-namespace WaveFormRendererLib
+namespace NAudio.WaveFormRenderer
 {
     public class StandardWaveFormRendererSettings : WaveFormRendererSettings
     {

@@ -2,7 +2,7 @@
 using System.Drawing;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using WaveFormRendererLib;
+using NAudio.WaveFormRenderer;
 
 namespace WaveFormRendererApp
 {

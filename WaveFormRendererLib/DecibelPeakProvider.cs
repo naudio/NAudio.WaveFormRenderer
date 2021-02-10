@@ -1,7 +1,7 @@
 ﻿using System;
 using NAudio.Wave;
 
-namespace WaveFormRendererLib
+namespace NAudio.WaveFormRenderer
 {
     class DecibelPeakProvider : IPeakProvider
     {

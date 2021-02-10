@@ -1,6 +1,6 @@
 ﻿using System.Linq;
 
-namespace WaveFormRendererLib
+namespace NAudio.WaveFormRenderer
 {
     public class MaxPeakProvider : PeakProvider
     {

@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace WaveFormRendererLib
+namespace NAudio.WaveFormRenderer
 {
     public class SamplingPeakProvider : PeakProvider
     {

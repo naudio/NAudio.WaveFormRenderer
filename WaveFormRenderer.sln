@@ -1,11 +1,18 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 14
-VisualStudioVersion = 14.0.25420.1
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.31005.135
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WaveFormRenderer", "WaveFormRenderer\WaveFormRenderer.csproj", "{F5334F42-9D05-43EB-8E98-2C02CED19BDF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WaveFormRenderer", "WaveFormRenderer\WaveFormRenderer.csproj", "{F5334F42-9D05-43EB-8E98-2C02CED19BDF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WaveFormRendererLib", "WaveFormRendererLib\WaveFormRendererLib.csproj", "{3EFEF2D1-5D08-46FD-AF6D-098DBE7FB3B4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WaveFormRendererLib", "WaveFormRendererLib\WaveFormRendererLib.csproj", "{3EFEF2D1-5D08-46FD-AF6D-098DBE7FB3B4}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{84D1A5F5-2A25-4ECF-B4DA-5F30DA496FF1}"
+	ProjectSection(SolutionItems) = preProject
+		.gitignore = .gitignore
+		LICENSE = LICENSE
+		README.md = README.md
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -24,5 +31,8 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {616158F3-A51C-4406-BEE1-ED8541F28CDD}
 	EndGlobalSection
 EndGlobal

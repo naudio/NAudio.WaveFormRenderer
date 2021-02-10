@@ -1,4 +1,4 @@
-﻿namespace WaveFormRendererLib
+﻿namespace NAudio.WaveFormRenderer
 {
     public class PeakInfo
     {

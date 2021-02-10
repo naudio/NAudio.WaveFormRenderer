@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Linq;
 
-namespace WaveFormRendererLib
+namespace NAudio.WaveFormRenderer
 {
     public class AveragePeakProvider : PeakProvider
     {

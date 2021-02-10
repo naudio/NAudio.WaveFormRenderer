@@ -1,6 +1,6 @@
 ﻿using NAudio.Wave;
 
-namespace WaveFormRendererLib
+namespace NAudio.WaveFormRenderer
 {
     public interface IPeakProvider
     {
