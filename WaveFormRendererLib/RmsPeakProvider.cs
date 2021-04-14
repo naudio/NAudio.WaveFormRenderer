@@ -2,7 +2,7 @@
 
 namespace NAudio.WaveFormRenderer
 {
-    public class RmsPeakProvider : PeakProvider
+    public sealed class RmsPeakProvider : PeakProvider
     {
         private readonly int blockSize;
 
@@ -28,7 +28,7 @@ namespace NAudio.WaveFormRenderer
                 max = Math.Max(max, rms);
             }
 
-            return new PeakInfo(0 -max, max);
+            return new PeakInfo(0 - max, max);
         }
     }
 }

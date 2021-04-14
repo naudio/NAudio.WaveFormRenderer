@@ -2,7 +2,7 @@
 
 namespace NAudio.WaveFormRenderer
 {
-    public class SamplingPeakProvider : PeakProvider
+    public sealed class SamplingPeakProvider : PeakProvider
     {
         private readonly int sampleInterval;
 
