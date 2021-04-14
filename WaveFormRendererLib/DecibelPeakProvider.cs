@@ -3,7 +3,7 @@ using NAudio.Wave;
 
 namespace NAudio.WaveFormRenderer
 {
-    class DecibelPeakProvider : IPeakProvider
+    sealed class DecibelPeakProvider : IPeakProvider
     {
         private readonly IPeakProvider sourceProvider;
         private readonly double dynamicRange;
