@@ -1,6 +1,6 @@
 ﻿namespace NAudio.WaveFormRenderer
 {
-    public class PeakInfo
+    public readonly struct PeakInfo
     {
         public PeakInfo(float min, float max)
         {
@@ -8,7 +8,8 @@
             Min = min;
         }
 
-        public float Min { get; private set; }
-        public float Max { get; private set; }
+        public float Min { get; }
+
+        public float Max { get; }
     }
 }
