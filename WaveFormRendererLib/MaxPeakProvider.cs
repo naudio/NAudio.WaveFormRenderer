@@ -1,14 +1,14 @@
-﻿using System.Linq;
+﻿using System;
 
 namespace NAudio.WaveFormRenderer
 {
-    public class MaxPeakProvider : PeakProvider
+    public sealed class MaxPeakProvider : PeakProvider
     {
         public override PeakInfo GetNextPeak()
         {
             var samplesRead = Provider.Read(ReadBuffer,0,ReadBuffer.Length);
-            var max = (samplesRead == 0) ? 0 : ReadBuffer.Take(samplesRead).Max();
-            var min = (samplesRead == 0) ? 0 : ReadBuffer.Take(samplesRead).Min();
+            var max = (samplesRead == 0) ? 0 : ReadBuffer.AsSpan(0, samplesRead).Max();
+            var min = (samplesRead == 0) ? 0 : ReadBuffer.AsSpan(0, samplesRead).Min();
             return new PeakInfo(min, max);
         }
     }
