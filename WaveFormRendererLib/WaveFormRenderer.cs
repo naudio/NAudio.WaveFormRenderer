@@ -24,6 +24,19 @@ namespace NAudio.WaveFormRenderer
             }
         }
 
+        public Image Render(WaveStream data, WaveFormRendererSettings settings)
+            => Render(data, new MaxPeakProvider(), settings);
+
+        public Image Render(WaveStream data, IPeakProvider peakProvider, WaveFormRendererSettings settings)
+        {
+            int bytesPerSample = (data.WaveFormat.BitsPerSample / 8);
+            var samples = data.Length / (bytesPerSample);
+            var samplesPerPixel = (int)(samples / settings.Width);
+            var stepSize = settings.PixelsPerPeak + settings.SpacerPixels;
+            peakProvider.Init(new WaveStreamToSampleProviderAdapter(data), samplesPerPixel * stepSize);
+            return Render(peakProvider, settings);
+        }
+
         private static Image Render(IPeakProvider peakProvider, WaveFormRendererSettings settings)
         {
             if (settings.DecibelScale)
