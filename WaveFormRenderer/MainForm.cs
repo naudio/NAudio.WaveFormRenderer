@@ -2,6 +2,7 @@
 using System.Drawing;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using NAudio.Wave;
 using NAudio.WaveFormRenderer;
 
 namespace WaveFormRendererApp
@@ -128,7 +129,10 @@ namespace WaveFormRendererApp
             Image image = null;
             try
             {
-                image = waveFormRenderer.Render(selectedFile, peakProvider, settings);
+                using(var waveStream = new AudioFileReader(selectedFile))
+                {
+                    image = waveFormRenderer.Render(waveStream, peakProvider, settings);
+                }
             }
             catch (Exception e)
             {

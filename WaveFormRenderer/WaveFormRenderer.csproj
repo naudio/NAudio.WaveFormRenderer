@@ -7,6 +7,9 @@
 		<UseWindowsForms>true</UseWindowsForms>
 	</PropertyGroup>
 	<ItemGroup>
+	  <PackageReference Include="NAudio" Version="2.0.1" />
+	</ItemGroup>
+	<ItemGroup>
 	  <ProjectReference Include="..\WaveFormRendererLib\WaveFormRendererLib.csproj" />
 	</ItemGroup>
 </Project>

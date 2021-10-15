@@ -6,22 +6,19 @@ namespace NAudio.WaveFormRenderer
 {
     public class WaveFormRenderer
     {
-        public Image Render(string selectedFile, WaveFormRendererSettings settings)
+        public Image Render(WaveStream waveStream, WaveFormRendererSettings settings)
         {
-            return Render(selectedFile, new MaxPeakProvider(), settings);
+            return Render(waveStream, new MaxPeakProvider(), settings);
         }        
 
-        public Image Render(string selectedFile, IPeakProvider peakProvider, WaveFormRendererSettings settings)
+        public Image Render(WaveStream waveStream, IPeakProvider peakProvider, WaveFormRendererSettings settings)
         {
-            using (var reader = new AudioFileReader(selectedFile))
-            {
-                int bytesPerSample = (reader.WaveFormat.BitsPerSample / 8);
-                var samples = reader.Length / (bytesPerSample);
-                var samplesPerPixel = (int)(samples / settings.Width);
-                var stepSize = settings.PixelsPerPeak + settings.SpacerPixels;
-                peakProvider.Init(reader, samplesPerPixel * stepSize);
-                return Render(peakProvider, settings);
-            }
+            int bytesPerSample = (waveStream.WaveFormat.BitsPerSample / 8);
+            var samples = waveStream.Length / (bytesPerSample);
+            var samplesPerPixel = (int)(samples / settings.Width);
+            var stepSize = settings.PixelsPerPeak + settings.SpacerPixels;
+            peakProvider.Init(waveStream.ToSampleProvider(), samplesPerPixel * stepSize);
+            return Render(peakProvider, settings);
         }
 
         private static Image Render(IPeakProvider peakProvider, WaveFormRendererSettings settings)

@@ -13,6 +13,10 @@ The waveform rendering algorithm is customizable:
  * Support for SoundCloud style bars
  * Several built-in rendering styles
 
+## Breaking changes
+
+v2 switches from passing in a filename to passing in a NAudio `WaveStream`. This allows it to be used cross-platform without taking a dependency on `AudioFileReader` which is Windows only. On Windows, simply use `AudioFileReader` to create the `WaveStream`. On other platforms you can still use `WaveFileReader`, or `Mp3FileReader` using the NLayer frame decoder.
+
 ## Test Harness Application
 Test harness app makes it easy to experiment with the various rendering options and save the results as a PNG.
 ![Test Harness UI](https://cloud.githubusercontent.com/assets/147668/18606773/48335280-7cb1-11e6-9d91-a69ea31395a6.PNG)

@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 	<PropertyGroup>
 		<TargetFramework>netstandard2.0</TargetFramework>
-		<Version>1.0.0</Version>
+		<Version>2.0.0</Version>
 		<Authors>Mark Heath</Authors>
 		<Description>WaveForm rendering component</Description>
 		<PackageProjectUrl>https://github.com/naudio/NAudio.WaveFormRenderer</PackageProjectUrl>
@@ -17,7 +17,7 @@
 	</PropertyGroup>
 
 	<ItemGroup>
-		<PackageReference Include="NAudio" Version="2.0.0" />
+		<PackageReference Include="NAudio.Core" Version="2.0.0" />
 		<PackageReference Include="System.Drawing.Common" Version="5.0.1" />
 	</ItemGroup>
 </Project>
