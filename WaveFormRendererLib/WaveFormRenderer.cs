@@ -17,7 +17,8 @@ namespace NAudio.WaveFormRenderer
             var samples = waveStream.Length / (bytesPerSample);
             var samplesPerPixel = (int)(samples / settings.Width);
             var stepSize = settings.PixelsPerPeak + settings.SpacerPixels;
-            peakProvider.Init(waveStream.ToSampleProvider(), samplesPerPixel * stepSize);
+            //using samplesPerPixel * stepSize only  may throw an Exception when rendering from .wav files (due to incorrect block length)
+            peakProvider.Init(waveStream.ToSampleProvider(), samplesPerPixel * stepSize - samplesPerPixel * stepSize % waveStream.WaveFormat.BlockAlign);
             return Render(peakProvider, settings);
         }
 
