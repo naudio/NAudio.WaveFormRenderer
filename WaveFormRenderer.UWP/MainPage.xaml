@@ -14,7 +14,7 @@
             <RowDefinition/>
         </Grid.RowDefinitions>
         <ScrollViewer Grid.Row="0" x:Name="HeaderScroll" HorizontalScrollMode="Enabled" HorizontalScrollBarVisibility="Visible" VerticalScrollMode="Disabled" VerticalScrollBarVisibility="Hidden">
-            <Grid x:Name="Headrer" Height="400" Background="White">
+            <Grid x:Name="Header" Height="400" Background="White">
 
             </Grid>
         </ScrollViewer>
