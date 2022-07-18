@@ -18,47 +18,6 @@
 
             </Grid>
         </ScrollViewer>
-
-        <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" Padding="10" BorderBrush="{ThemeResource AppBarBorderThemeBrush}" BorderThickness="0.5" Grid.Row="1" ColumnSpacing="8">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition></ColumnDefinition>
-                        <ColumnDefinition></ColumnDefinition>
-                        <ColumnDefinition></ColumnDefinition>
-                        <ColumnDefinition></ColumnDefinition>
-                        <ColumnDefinition Width="Auto"></ColumnDefinition>
-                        <ColumnDefinition Width="Auto"></ColumnDefinition>
-                    </Grid.ColumnDefinitions>
-                    <StackPanel Orientation="Horizontal" Grid.Column="2">
-                        <TextBlock VerticalAlignment="Center">Start time:</TextBlock>
-                        <TextBox PlaceholderText="00:00" x:Name="StartTime"></TextBox>
-                    </StackPanel>
-                    <StackPanel Orientation="Horizontal" Grid.Column="3">
-                        <TextBlock VerticalAlignment="Center">End time:</TextBlock>
-                        <TextBox PlaceholderText="00:00" x:Name="EndTime"></TextBox>
-                    </StackPanel>
-                    <Button Click="Button_Click_1" Grid.Column="4">Add</Button>
-                    <Button Grid.Column="5" Style="{ThemeResource AccentButtonStyle}" Click="Button_Click_2">Save all...</Button>
-                </Grid>
-        <Button Click="Button_Click">Click</Button>
-        <!--<ListView>
-            <ListView.ItemTemplate>
-                <DataTemplate x:DataType="local:AudioSplit">
-                    <ListViewItem Padding="0" VerticalContentAlignment="Stretch" HorizontalContentAlignment="Stretch">
-                        <ScrollViewer ViewChanging="ScrollViewer_ViewChanging" x:Name="SplitScroll" Height="100"  HorizontalScrollMode="Enabled" VerticalScrollMode="Disabled" HorizontalScrollBarVisibility="Visible" VerticalScrollBarVisibility="Hidden">
-                            <ContentPresenter Content="{x:Bind TrimVisual, Mode=OneWay}" Height="100" Width="{x:Bind Width, Mode=OneWay}" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch"></ContentPresenter>
-                        </ScrollViewer>
-                    </ListViewItem>
-                </DataTemplate>
-            </ListView.ItemTemplate>
-        </ListView>-->
-        <ItemsControl x:Name="Blah" Grid.Row="2" ItemsSource="{x:Bind AudioSplits, Mode=OneWay}">
-            <ItemsControl.ItemTemplate>
-                <DataTemplate x:DataType="local:AudioSplit">
-                    <Grid Background="White" BorderBrush="{ThemeResource AppBarBorderThemeBrush}" BorderThickness="0.5" HorizontalAlignment="Stretch">
-                        <Button Tag="{x:Bind PlayBackItem}" Click="Button_Click_3">Play</Button>
-                    </Grid>
-                </DataTemplate>
-            </ItemsControl.ItemTemplate>
-        </ItemsControl>
+        <Button Click="Button_Click" Grid.Row="1" Margin="10">Load Media</Button>
     </Grid>
 </Page>
