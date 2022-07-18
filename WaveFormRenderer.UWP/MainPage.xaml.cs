@@ -99,7 +99,8 @@ namespace TabbedConcept
                         var waveForm = await waveFormRenderer.Render(waveStream, peakProvider, settings);
                     await Windows.ApplicationModel.Core.CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, async () =>
                     {
-                        Headrer.Children.Add((StackPanel)waveForm);
+                        Header.Children.Clear();
+                        Header.Children.Add((StackPanel)waveForm);
                     });
                 }
             }
