@@ -1,9 +1,11 @@
-﻿using System;
-using System.Drawing;
-using System.Threading.Tasks;
-using System.Windows.Forms;
 using NAudio.Wave;
 using NAudio.WaveFormRenderer;
+using SkiaSharp;
+using System;
+using System.Drawing;
+using System.IO;
+using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace WaveFormRendererApp
 {
@@ -19,43 +21,46 @@ namespace WaveFormRendererApp
             InitializeComponent();
             waveFormRenderer = new WaveFormRenderer();
 
-            standardSettings = new StandardWaveFormRendererSettings() {Name = "Standard"};
-            var soundcloudOriginalSettings = new SoundCloudOriginalSettings() {Name = "SoundCloud Original"};
+            standardSettings = new StandardWaveFormRendererSettings() { Name = "Standard" };
+            var soundcloudOriginalSettings = new SoundCloudOriginalSettings() { Name = "SoundCloud Original" };
 
-            var soundCloudLightBlocks = new SoundCloudBlockWaveFormSettings(Color.FromArgb(102, 102, 102), Color.FromArgb(103, 103, 103), Color.FromArgb(179, 179, 179),
-                Color.FromArgb(218, 218, 218)) {Name = "SoundCloud Light Blocks"};
+            var soundCloudLightBlocks = new SoundCloudBlockWaveFormSettings(new SKColor(102, 102, 102), new SKColor(103, 103, 103), new SKColor(179, 179, 179),
+                new SKColor(218, 218, 218))
+            { Name = "SoundCloud Light Blocks" };
 
-            var soundCloudDarkBlocks = new SoundCloudBlockWaveFormSettings(Color.FromArgb(52, 52, 52), Color.FromArgb(55, 55, 55), Color.FromArgb(154, 154, 154),
-                Color.FromArgb(204, 204, 204)) {Name = "SoundCloud Darker Blocks"};
+            var soundCloudDarkBlocks = new SoundCloudBlockWaveFormSettings(new SKColor(52, 52, 52), new SKColor(55, 55, 55), new SKColor(154, 154, 154),
+                new SKColor(204, 204, 204))
+            { Name = "SoundCloud Darker Blocks" };
 
-            var soundCloudOrangeBlocks = new SoundCloudBlockWaveFormSettings(Color.FromArgb(255, 76, 0), Color.FromArgb(255, 52, 2), Color.FromArgb(255, 171, 141),
-                Color.FromArgb(255, 213, 199)) {Name = "SoundCloud Orange Blocks"};
+            var soundCloudOrangeBlocks = new SoundCloudBlockWaveFormSettings(new SKColor(255, 76, 0), new SKColor(255, 52, 2), new SKColor(255, 171, 141),
+                new SKColor(255, 213, 199))
+            { Name = "SoundCloud Orange Blocks" };
 
-            var topSpacerColor = Color.FromArgb(64, 83, 22, 3);
-            var soundCloudOrangeTransparentBlocks = new SoundCloudBlockWaveFormSettings(Color.FromArgb(196, 197, 53, 0), topSpacerColor, Color.FromArgb(196, 79, 26, 0),
-                Color.FromArgb(64, 79, 79, 79)) 
-                { 
-                    Name = "SoundCloud Orange Transparent Blocks", 
-                    PixelsPerPeak = 2, 
-                    SpacerPixels = 1,
-                    TopSpacerGradientStartColor = topSpacerColor,
-                    BackgroundColor = Color.Transparent
-                };
+            var topSpacerColor = new SKColor(83, 22, 3, 64);
+            var soundCloudOrangeTransparentBlocks = new SoundCloudBlockWaveFormSettings(new SKColor(197, 53, 0, 196), topSpacerColor, new SKColor(79, 26, 0, 196),
+                new SKColor(79, 79, 79, 64))
+            {
+                Name = "SoundCloud Orange Transparent Blocks",
+                PixelsPerPeak = 2,
+                SpacerPixels = 1,
+                TopSpacerGradientStartColor = topSpacerColor,
+                BackgroundColor = SKColors.Transparent
+            };
 
-            var topSpacerColor2 = Color.FromArgb(64, 224, 224, 224);
-            var soundCloudGrayTransparentBlocks = new SoundCloudBlockWaveFormSettings(Color.FromArgb(196, 224, 225, 224), topSpacerColor2, Color.FromArgb(196, 128, 128, 128),
-                Color.FromArgb(64, 128, 128, 128))
+            var topSpacerColor2 = new SKColor(224, 224, 224, 64);
+            var soundCloudGrayTransparentBlocks = new SoundCloudBlockWaveFormSettings(new SKColor(224, 225, 224, 196), topSpacerColor2, new SKColor(128, 128, 128, 196),
+                new SKColor(128, 128, 128, 64))
             {
                 Name = "SoundCloud Gray Transparent Blocks",
                 PixelsPerPeak = 2,
                 SpacerPixels = 1,
                 TopSpacerGradientStartColor = topSpacerColor2,
-                BackgroundColor = Color.Transparent
+                BackgroundColor = SKColors.Transparent
             };
 
 
-            buttonBottomColour.BackColor = standardSettings.BottomPeakPen.Color;
-            buttonTopColour.BackColor = standardSettings.TopPeakPen.Color;
+            buttonBottomColour.BackColor = Color.Peru;
+            buttonTopColour.BackColor = Color.Maroon;
             comboBoxPeakCalculationStrategy.Items.Add("Max Absolute Value");
             comboBoxPeakCalculationStrategy.Items.Add("Max Rms Value");
             comboBoxPeakCalculationStrategy.Items.Add("Sampled Peaks");
@@ -67,11 +72,11 @@ namespace WaveFormRendererApp
 
             comboBoxRenderSettings.DataSource = new[]
             {
-                standardSettings, 
-                soundcloudOriginalSettings, 
-                soundCloudLightBlocks, 
-                soundCloudDarkBlocks, 
-                soundCloudOrangeBlocks, 
+                standardSettings,
+                soundcloudOriginalSettings,
+                soundCloudLightBlocks,
+                soundCloudDarkBlocks,
+                soundCloudOrangeBlocks,
                 soundCloudOrangeTransparentBlocks,
                 soundCloudGrayTransparentBlocks
             };
@@ -101,7 +106,7 @@ namespace WaveFormRendererApp
 
         private WaveFormRendererSettings GetRendererSettings()
         {
-            var settings = (WaveFormRendererSettings) comboBoxRenderSettings.SelectedItem;
+            var settings = (WaveFormRendererSettings)comboBoxRenderSettings.SelectedItem;
             settings.TopHeight = (int)upDownTopHeight.Value;
             settings.BottomHeight = (int)upDownBottomHeight.Value;
             settings.Width = (int)upDownWidth.Value;
@@ -115,7 +120,10 @@ namespace WaveFormRendererApp
             var settings = GetRendererSettings();
             if (imageFile != null)
             {
-                settings.BackgroundImage = new Bitmap(imageFile);
+                using (var stream = new System.IO.FileStream(imageFile, FileMode.Open, FileAccess.Read, FileShare.ReadWrite))
+                {
+                    settings.BackgroundImage = SKBitmap.Decode(stream);
+                }
             }
             pictureBox1.Image = null;
             labelRendering.Visible = true;
@@ -126,10 +134,10 @@ namespace WaveFormRendererApp
 
         private void RenderThreadFunc(IPeakProvider peakProvider, WaveFormRendererSettings settings)
         {
-            Image image = null;
+            SKBitmap image = null;
             try
             {
-                using(var waveStream = new AudioFileReader(selectedFile))
+                using (var waveStream = new AudioFileReader(selectedFile))
                 {
                     image = waveFormRenderer.Render(waveStream, peakProvider, settings);
                 }
@@ -141,10 +149,16 @@ namespace WaveFormRendererApp
             BeginInvoke((Action)(() => FinishedRender(image)));
         }
 
-        private void FinishedRender(Image image)
+        private void FinishedRender(SKBitmap image)
         {
+            using (var memStream = new MemoryStream())
+            using (var wstream = new SKManagedWStream(memStream))
+            {
+                image.Encode(wstream, SKEncodedImageFormat.Png, 100);
+                pictureBox1.Image = Image.FromStream(memStream);
+            }
+
             labelRendering.Visible = false;
-            pictureBox1.Image = image;
             Enabled = true;
         }
 
@@ -183,8 +197,10 @@ namespace WaveFormRendererApp
             {
                 button.BackColor = cd.Color;
 
-                standardSettings.TopPeakPen = new Pen(buttonTopColour.BackColor);
-                standardSettings.BottomPeakPen = new Pen(buttonBottomColour.BackColor);
+                var topColor = buttonTopColour.BackColor;
+                var bottomColor = buttonBottomColour.BackColor;
+                standardSettings.TopPeakShader = SKShader.CreateColor(new SKColor(topColor.R, topColor.G, topColor.B, topColor.A));
+                standardSettings.BottomPeakShader = SKShader.CreateColor(new SKColor(bottomColor.R, bottomColor.G, bottomColor.B, bottomColor.A));
                 RenderWaveform();
             }
         }

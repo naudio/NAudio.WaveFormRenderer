@@ -1,4 +1,4 @@
-using System.Drawing;
+using SkiaSharp;
 
 namespace NAudio.WaveFormRenderer
 {
@@ -8,19 +8,19 @@ namespace NAudio.WaveFormRenderer
         {
             PixelsPerPeak = 1;
             SpacerPixels = 0;
-            TopPeakPen = Pens.Maroon;
-            BottomPeakPen = Pens.Peru;
+            TopPeakShader = SKShader.CreateColor(SKColors.Maroon);
+            BottomPeakShader = SKShader.CreateColor(SKColors.Peru);
         }
 
 
-        public override Pen TopPeakPen { get; set; }
+        public override SKShader TopPeakShader { get; set; }
 
         // not needed
-        public override Pen TopSpacerPen { get; set; }
-        
-        public override Pen BottomPeakPen { get; set; }
-        
+        public override SKShader TopSpacerShader { get; set; }
+
+        public override SKShader BottomPeakShader { get; set; }
+
         // not needed
-        public override Pen BottomSpacerPen { get; set; }
+        public override SKShader BottomSpacerShader { get; set; }
     }
 }

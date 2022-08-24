@@ -1,5 +1,4 @@
-using System.Drawing;
-using System.Drawing.Drawing2D;
+using SkiaSharp;
 
 namespace NAudio.WaveFormRenderer
 {
@@ -12,7 +11,7 @@ namespace NAudio.WaveFormRenderer
             BottomHeight = 50;
             PixelsPerPeak = 1;
             SpacerPixels = 0;
-            BackgroundColor = Color.Beige;
+            BackgroundColor = SKColors.Beige;
         }
 
         // for display purposes only
@@ -24,25 +23,22 @@ namespace NAudio.WaveFormRenderer
         public int BottomHeight { get; set; }
         public int PixelsPerPeak { get; set; }
         public int SpacerPixels { get; set; }
-        public virtual Pen TopPeakPen { get; set; }
-        public virtual Pen TopSpacerPen { get; set; }
-        public virtual Pen BottomPeakPen { get; set; }
-        public virtual Pen BottomSpacerPen { get; set; }
+        public virtual SKShader TopPeakShader { get; set; }
+        public virtual SKShader TopSpacerShader { get; set; }
+        public virtual SKShader BottomPeakShader { get; set; }
+        public virtual SKShader BottomSpacerShader { get; set; }
         public bool DecibelScale { get; set; }
-        public Color BackgroundColor { get; set; }
-        public Image BackgroundImage { get; set; }
-        public Brush BackgroundBrush {
-            get
-            {
-                if (BackgroundImage == null) return new SolidBrush(BackgroundColor);
-                return new TextureBrush(BackgroundImage,WrapMode.Clamp);
-            }
-        }
+        public SKColor BackgroundColor { get; set; }
+        public SKBitmap BackgroundImage { get; set; }
 
-        protected static Pen CreateGradientPen(int height, Color startColor, Color endColor)
+        protected static SKShader CreateGradientShader(int height, SKColor startColor, SKColor endColor)
         {
-            var brush = new LinearGradientBrush(new Point(0, 0), new Point(0, height), startColor, endColor);
-            return new Pen(brush);
+            return SKShader.CreateLinearGradient(
+                new SKPoint(0, 0),
+                new SKPoint(0, height),
+                new SKColor[] { startColor, endColor },
+                new float[] { 0, 1 },
+                SKShaderTileMode.Clamp);
         }
     }
 }
