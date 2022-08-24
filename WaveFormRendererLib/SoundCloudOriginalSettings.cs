@@ -1,6 +1,5 @@
+using SkiaSharp;
 using System;
-using System.Drawing;
-using System.Drawing.Drawing2D;
 
 namespace NAudio.WaveFormRenderer
 {
@@ -13,58 +12,51 @@ namespace NAudio.WaveFormRenderer
         {
             PixelsPerPeak = 1;
             SpacerPixels = 0;
-            BackgroundColor = Color.White;
+            BackgroundColor = SKColors.White;
         }
 
-        public override Pen TopPeakPen
+        public override SKShader TopPeakShader
         {
             get
             {
-                if (base.TopPeakPen == null || lastTopHeight != TopHeight)
+                if (base.TopPeakShader == null || lastTopHeight != TopHeight)
                 {
-                    base.TopPeakPen = CreateGradientPen(TopHeight, Color.FromArgb(120, 120, 120), Color.FromArgb(50, 50, 50));
+                    base.TopPeakShader = CreateGradientShader(TopHeight, new SKColor(120, 120, 120), new SKColor(50, 50, 50));
                     lastTopHeight = TopHeight;
                 }
-                return base.TopPeakPen;
+                return base.TopPeakShader;
             }
-            set { base.TopPeakPen = value; }
+            set { base.TopPeakShader = value; }
         }
 
 
-        public override Pen BottomPeakPen 
+        public override SKShader BottomPeakShader
         {
             get
             {
-                if (base.BottomPeakPen == null || lastBottomHeight != BottomHeight || lastTopHeight != TopHeight)
+                if (base.BottomPeakShader == null || lastBottomHeight != BottomHeight || lastTopHeight != TopHeight)
                 {
-                    base.BottomPeakPen = CreateSoundcloudBottomPen(TopHeight, BottomHeight);
+                    base.BottomPeakShader = CreateSoundcloudBottomShader(TopHeight, BottomHeight);
                     lastBottomHeight = BottomHeight;
                     lastTopHeight = TopHeight;
                 }
-                return base.BottomPeakPen;
+                return base.BottomPeakShader;
             }
-            set { base.BottomPeakPen = value; }
+            set { base.BottomPeakShader = value; }
         }
 
 
-        public override Pen BottomSpacerPen
+        public override SKShader BottomSpacerShader
         {
-            get { throw new InvalidOperationException("No spacer pen required"); }
+            get { throw new InvalidOperationException("No spacer shader required"); }
         }
 
-        private Pen CreateSoundcloudBottomPen(int topHeight, int bottomHeight)
+        private SKShader CreateSoundcloudBottomShader(int topHeight, int bottomHeight)
         {
-            var bottomGradient = new LinearGradientBrush(new Point(0, topHeight), new Point(0, topHeight + bottomHeight), 
-                Color.FromArgb(16, 16, 16), Color.FromArgb(150, 150, 150));
-            var colorBlend = new ColorBlend(3);
-            colorBlend.Colors[0] = Color.FromArgb(16, 16, 16);
-            colorBlend.Colors[1] = Color.FromArgb(142, 142, 142);
-            colorBlend.Colors[2] = Color.FromArgb(150, 150, 150);
-            colorBlend.Positions[0] = 0;
-            colorBlend.Positions[1] = 0.1f;
-            colorBlend.Positions[2] = 1.0f;
-            bottomGradient.InterpolationColors = colorBlend;
-            return new Pen(bottomGradient);
+            return SKShader.CreateLinearGradient(new SKPoint(0, topHeight), new SKPoint(0, topHeight + bottomHeight),
+                new SKColor[] { new SKColor(16, 16, 16), new SKColor(142, 142, 142), new SKColor(150, 150, 150) },
+                new float[] { 0, 0.1f, 1 },
+                SKShaderTileMode.Clamp);
         }
     }
 }

@@ -1,65 +1,65 @@
-using System.Drawing;
+using SkiaSharp;
 
 namespace NAudio.WaveFormRenderer
 {
     public class SoundCloudBlockWaveFormSettings : WaveFormRendererSettings
     {
-        private readonly Color topSpacerStartColor;
-        private Pen topPen;
-        private Pen topSpacerPen;
-        private Pen bottomPen;
-        private Pen bottomSpacerPen;
+        private readonly SKColor topSpacerStartColor;
+        private SKShader topShader;
+        private SKShader topSpacerShader;
+        private SKShader bottomShader;
+        private SKShader bottomSpacerShader;
 
         private int lastTopHeight;
         private int lastBottomHeight;
 
-        public SoundCloudBlockWaveFormSettings(Color topPeakColor, Color topSpacerStartColor, Color bottomPeakColor, Color bottomSpacerColor)
+        public SoundCloudBlockWaveFormSettings(SKColor topPeakColor, SKColor topSpacerStartColor, SKColor bottomPeakColor, SKColor bottomSpacerColor)
         {
             this.topSpacerStartColor = topSpacerStartColor;
-            topPen = new Pen(topPeakColor);
-            bottomPen = new Pen(bottomPeakColor);
-            bottomSpacerPen = new Pen(bottomSpacerColor);
+            topShader = SKShader.CreateColor(topPeakColor);
+            bottomShader = SKShader.CreateColor(bottomPeakColor);
+            bottomSpacerShader = SKShader.CreateColor(bottomSpacerColor);
             PixelsPerPeak = 4;
             SpacerPixels = 2;
-            BackgroundColor = Color.White;
-            TopSpacerGradientStartColor = Color.White;
+            BackgroundColor = SKColors.White;
+            TopSpacerGradientStartColor = SKColors.White;
         }
 
-        public override Pen TopPeakPen
+        public override SKShader TopPeakShader
         {
-            get { return topPen; }
-            set { topPen = value; }
+            get { return topShader; }
+            set { topShader = value; }
         }
 
-        public Color TopSpacerGradientStartColor { get; set; }
+        public SKColor TopSpacerGradientStartColor { get; set; }
 
-        public override Pen TopSpacerPen
+        public override SKShader TopSpacerShader
         {
             get
             {
-                if (topSpacerPen == null || lastBottomHeight != BottomHeight || lastTopHeight != TopHeight)
+                if (topSpacerShader == null || lastBottomHeight != BottomHeight || lastTopHeight != TopHeight)
                 {
-                    topSpacerPen = CreateGradientPen(TopHeight, TopSpacerGradientStartColor, topSpacerStartColor);
+                    topSpacerShader = CreateGradientShader(TopHeight, TopSpacerGradientStartColor, topSpacerStartColor);
                     lastBottomHeight = BottomHeight;
                     lastTopHeight = TopHeight;
                 }
-                return topSpacerPen;
+                return topSpacerShader;
             }
-            set { topSpacerPen = value; }
+            set { topSpacerShader = value; }
         }
 
 
-        public override Pen BottomPeakPen
+        public override SKShader BottomPeakShader
         {
-            get { return bottomPen; }
-            set { bottomPen = value; }
+            get { return bottomShader; }
+            set { bottomShader = value; }
         }
 
 
-        public override Pen BottomSpacerPen
+        public override SKShader BottomSpacerShader
         {
-            get { return bottomSpacerPen; }
-            set { bottomSpacerPen = value; }
+            get { return bottomSpacerShader; }
+            set { bottomSpacerShader = value; }
         }
 
     }
